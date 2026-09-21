@@ -1,0 +1,258 @@
+/* ═══════════════════════════════════════════════════════════
+   Calculator.css — dark, dial-inspired calculator UI
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── Design tokens ─────────────────────────────────────────── */
+:root {
+  --bg-card:        #1a1a2e;
+  --bg-input:       #0d0d1a;
+  --bg-numpad-btn:  #1e1e38;
+  --bg-control-btn: #2a1e3a;
+  --bg-op-btn:      #252540;
+  --bg-op-active:   #6c8cff;
+  --bg-equals:      #6c8cff;
+  --bg-result:      #0d0d1a;
+
+  --clr-text:       #e0e0ff;
+  --clr-muted:      #8898b8;
+  --clr-accent:     #6c8cff;
+  --clr-control:    #cc88ff;
+  --clr-op:         #6c8cff;
+  --clr-error:      #ff4466;
+  --clr-error-bg:   #1f1020;
+  --clr-badge-bg:   #3f0a1a;
+
+  --radius-card:    20px;
+  --radius-btn:     14px;
+  --radius-pill:    999px;
+
+  --shadow-card: 0 24px 64px rgba(0, 0, 0, 0.55),
+                 0 0 0 1px rgba(255, 255, 255, 0.04);
+
+  --transition: 0.14s ease;
+}
+
+/* ── Calculator card ───────────────────────────────────────── */
+.calculator {
+  background: var(--bg-card);
+  border-radius: var(--radius-card);
+  padding: 20px;
+  width: 100%;
+  max-width: 380px;
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* ── Input section ─────────────────────────────────────────── */
+.inputs-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.input-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--clr-muted);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  user-select: none;
+}
+
+.number-input {
+  background: var(--bg-input);
+  border: 1.5px solid #2d2d44;
+  border-radius: 10px;
+  color: var(--clr-text);
+  font-size: 22px;
+  font-family: 'SF Mono', 'Fira Code', 'Courier New', monospace;
+  padding: 11px 14px;
+  text-align: right;
+  outline: none;
+  transition: border-color var(--transition);
+  width: 100%;
+}
+
+.number-input::placeholder {
+  color: #3a3a5c;
+}
+
+.number-input:focus,
+.number-input.focused {
+  border-color: var(--clr-accent);
+}
+
+.number-input.error {
+  border-color: var(--clr-error);
+}
+
+.field-error {
+  font-size: 11px;
+  color: var(--clr-error);
+  padding-left: 2px;
+}
+
+/* ── Operations row ────────────────────────────────────────── */
+.operations-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+/* ── Numpad ────────────────────────────────────────────────── */
+.numpad {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+/* ── Shared button base ────────────────────────────────────── */
+.btn {
+  border: none;
+  border-radius: var(--radius-btn);
+  font-size: 18px;
+  font-weight: 500;
+  cursor: pointer;
+  color: var(--clr-text);
+  user-select: none;
+  /* Make buttons square via aspect-ratio */
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: filter var(--transition), transform var(--transition);
+}
+
+.btn:hover  { filter: brightness(1.15); }
+.btn:active { transform: scale(0.92); }
+
+/* ── Button variants ───────────────────────────────────────── */
+.btn-digit   { background: var(--bg-numpad-btn); }
+.btn-control { background: var(--bg-control-btn); color: var(--clr-control); font-size: 15px; }
+
+.btn-op {
+  background: var(--bg-op-btn);
+  color: var(--clr-op);
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.btn-op.active {
+  background: var(--bg-op-active);
+  color: #fff;
+}
+
+.btn-equals {
+  background: var(--bg-equals);
+  color: #fff;
+  font-size: 22px;
+  font-weight: 700;
+  /* Equals is not square — no aspect-ratio override needed via grid */
+}
+
+.btn-equals.loading { opacity: 0.65; cursor: not-allowed; }
+.btn-equals:disabled { cursor: not-allowed; }
+
+/* ── Zero button spans 2 columns ───────────────────────────── */
+.btn-zero {
+  grid-column: span 2;
+  aspect-ratio: auto;        /* override square to stay proportional */
+  border-radius: var(--radius-pill);
+  justify-content: flex-start;
+  padding-left: 22px;
+}
+
+/* ── API error display ─────────────────────────────────────── */
+.api-errors {
+  background: var(--clr-error-bg);
+  border: 1px solid var(--clr-error);
+  border-radius: 10px;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.api-error-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: #ff6688;
+}
+
+.error-badge {
+  background: var(--clr-badge-bg);
+  color: var(--clr-error);
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.error-msg {
+  line-height: 1.4;
+}
+
+/* ── Result section ────────────────────────────────────────── */
+.result-section {
+  background: var(--bg-result);
+  border-radius: 12px;
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #2d2d44;
+}
+
+.result-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--clr-muted);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+.result-value {
+  font-size: 28px;
+  font-weight: 300;
+  color: var(--clr-accent);
+  font-family: 'SF Mono', 'Fira Code', 'Courier New', monospace;
+  word-break: break-all;
+  text-align: right;
+}
+
+/* ── Mobile ────────────────────────────────────────────────── */
+@media (max-width: 420px) {
+  .calculator {
+    border-radius: 0;
+    max-width: 100%;
+    padding: 14px 10px;
+    gap: 10px;
+    min-height: 100vh;
+  }
+
+  .btn {
+    font-size: 16px;
+  }
+
+  .number-input {
+    font-size: 18px;
+    padding: 9px 12px;
+  }
+
+  .result-value {
+    font-size: 22px;
+  }
+}

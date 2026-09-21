@@ -1,0 +1,39 @@
+version: '3.9'
+
+services:
+
+  # ── Go REST API ──────────────────────────────────────────────
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: calculator-backend
+    ports:
+      - "8080:8080"
+    networks:
+      - calc-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:8080/add --post-data '{\"addend1\":1,\"addend2\":1}' || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  # ── React SPA (nginx) ────────────────────────────────────────
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: calculator-frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      backend:
+        condition: service_healthy
+    networks:
+      - calc-net
+    restart: unless-stopped
+
+networks:
+  calc-net:
+    driver: bridge
