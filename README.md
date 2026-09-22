@@ -4,37 +4,8 @@ A full-stack calculator with a **Go REST API** back end and a **React** front en
 
 ---
 
-## Architecture
 
-```
-Calculator/
-├── backend/                 # Go REST API
-│   ├── handlers/
-│   │   ├── handlers.go
-│   │   └── handlers_test.go
-│   ├── middleware/
-│   │   ├── cors.go
-│   │   └── cors_test.go
-│   ├── models/
-│   │   └── models.go
-│   ├── main.go
-│   ├── go.mod
-│   └── Dockerfile
-└── frontend/                # React SPA
-    ├── src/
-    │   ├── components/      # Calculator UI
-    │   ├── hooks/           # useCalculator logic hook
-    │   ├── services/        # Axios API calls
-    │   └── utils/           # Pure validators
-    ├── nginx.conf
-    ├── package.json
-    ├── vite.config.js
-    └── Dockerfile
-```
-
----
-
-## Prerequisites
+## Requirements to run the application
 
 | Tool              | Minimum version |
 |-------------------|-----------------|
@@ -45,7 +16,7 @@ Calculator/
 
 ---
 
-## Running with Docker (recommended)
+## Running with Docker compose (recommended)
 
 ```bash
 # 1. Clone / navigate to the project root
@@ -90,7 +61,7 @@ npm run dev
 
 ## API Reference
 
-All endpoints accept `Content-Type: application/json` via `POST`.
+All endpoints are REST. Request examples are listed below. Success and error responses are generic for all (see below).
 
 ### `POST /add`
 

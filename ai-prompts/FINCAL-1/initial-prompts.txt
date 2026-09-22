@@ -59,7 +59,7 @@ Write a full stack application/system that consists of one backend written in go
 1.3.Unit tests: Cover all the code written by unit tests.
 1.4. Coverage report: Generate a coverage report for unit tests.
 
-2. Front end: written by react, compatible with mobile devices.
+2. Front end: written by react, with typescript, compatible with mobile devices.
 
 2.2. User interface: A user friendly interface that consist of a dial for a calculator.
 2.2. APIs consumed: For each operation triggered by its own button, the corresponding endpoint (see section 1.1) of the backend application should be consumed.

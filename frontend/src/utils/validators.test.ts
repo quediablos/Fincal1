@@ -1,11 +1,13 @@
 import { describe, it, expect } from 'vitest'
 import { validateNumber, validateDivisor } from './validators'
+import type { ValidationResult } from '../types'
 
 // ─────────────────────── validateNumber ───────────────────────
 
 describe('validateNumber', () => {
   it('accepts a positive integer string', () => {
-    expect(validateNumber('42')).toEqual({ valid: true, error: null })
+    const result: ValidationResult = validateNumber('42')
+    expect(result).toEqual({ valid: true, error: null })
   })
 
   it('accepts a negative integer string', () => {
@@ -64,17 +66,27 @@ describe('validateNumber', () => {
     expect(result.error).toBeTruthy()
   })
 
-  it('rejects Infinity', () => {
+  it('rejects "Infinity"', () => {
     const result = validateNumber('Infinity')
     expect(result.valid).toBe(false)
     expect(result.error).toBeTruthy()
+  })
+
+  it('rejects "-Infinity"', () => {
+    const result = validateNumber('-Infinity')
+    expect(result.valid).toBe(false)
+    expect(result.error).toBeTruthy()
+  })
+
+  it('error is null when valid', () => {
+    expect(validateNumber('5').error).toBeNull()
   })
 })
 
 // ─────────────────────── validateDivisor ───────────────────────
 
 describe('validateDivisor', () => {
-  it('accepts a positive non-zero number', () => {
+  it('accepts a positive non-zero number string', () => {
     expect(validateDivisor('5')).toEqual({ valid: true, error: null })
   })
 
@@ -82,7 +94,7 @@ describe('validateDivisor', () => {
     expect(validateDivisor('-3')).toEqual({ valid: true, error: null })
   })
 
-  it('accepts a non-zero float', () => {
+  it('accepts a small non-zero float', () => {
     expect(validateDivisor('0.001')).toEqual({ valid: true, error: null })
   })
 
@@ -98,7 +110,7 @@ describe('validateDivisor', () => {
     expect(result.error).toMatch(/zero/i)
   })
 
-  it('rejects an empty string (propagates from validateNumber)', () => {
+  it('rejects an empty string (propagated from validateNumber)', () => {
     const result = validateDivisor('')
     expect(result.valid).toBe(false)
     expect(result.error).toBeTruthy()
@@ -114,5 +126,9 @@ describe('validateDivisor', () => {
     const result = validateDivisor(null)
     expect(result.valid).toBe(false)
     expect(result.error).toBeTruthy()
+  })
+
+  it('error is null when valid', () => {
+    expect(validateDivisor('4').error).toBeNull()
   })
 })
