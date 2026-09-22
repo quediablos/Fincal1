@@ -7,12 +7,12 @@ A full-stack calculator with a **Go REST API** back end and a **React** front en
 
 ## Requirements to run the application
 
-| Tool              | Minimum version |
-|-------------------|-----------------|
-| Docker            | 24.x            |
-| Docker Compose    | v2.x            |
-| Go *(dev only)*   | 1.21            |
-| Node.js *(dev only)* | 20.x         |
+| Tool                                      | Minimum version |
+|-------------------------------------------|-----------------|
+| Docker *(for containerized run)*          | 24.x            |
+| Docker Compose  *(for containerized run)* | v2.x            |
+| Go *(for local devopment)*                | 1.21            |
+| Node.js *(for local development)*         | 20.x         |
 
 ---
 
