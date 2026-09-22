@@ -1,3 +1,4 @@
+/// <reference types="vitest" />
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
@@ -7,8 +8,6 @@ export default defineConfig({
   server: {
     port: 3000,
     proxy: {
-      // All /api/* calls are forwarded to the Go backend.
-      // The /api prefix is stripped before the request hits the backend.
       '/api': {
         target: 'http://localhost:8080',
         changeOrigin: true,
@@ -20,11 +19,11 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'jsdom',
-    setupFiles: ['./src/setupTests.js'],
+    setupFiles: ['./src/setupTests.ts'],
     coverage: {
       provider: 'v8',
       reporter: ['text', 'html', 'lcov'],
-      exclude: ['src/main.jsx', 'src/setupTests.js'],
+      exclude: ['src/main.tsx', 'src/setupTests.ts', 'src/vite-env.d.ts'],
     },
   },
 })

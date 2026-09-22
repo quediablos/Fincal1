@@ -1,7 +1,7 @@
-import React from 'react'
+import type { JSX } from 'react'
 import Calculator from './components/Calculator'
 
-function App() {
+function App(): JSX.Element {
   return (
     <div className="app">
       <header className="app-header">
